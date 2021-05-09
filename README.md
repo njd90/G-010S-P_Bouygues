@@ -1,3 +1,6 @@
+<p align="left"> <img src="https://komarev.com/ghpvc/?username=njd90&label=Profile%20views&color=0e75b6&style=flat" alt="njd90" /> </p>
+
+
 # G-010S-P sur infra Bouygues Offre Must
 
 ## Matériels nécessaires :  
@@ -188,4 +191,3 @@ https://www.dslreports.com/forum/r32230041-Internet-Bypassing-the-HH3K-up-to-2-5
 https://forum.openwrt.org/t/support-ma5671a-sfp-gpon/48042/33
 
 https://lafibre.info/remplacer-livebox/guide-de-connexion-fibre-directement-sur-un-routeur-voire-meme-en-2gbps/msg832904/#msg832904
-
