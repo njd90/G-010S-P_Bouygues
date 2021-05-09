@@ -1,13 +1,17 @@
-# G-010S-P sur infra Bouygues
+# G-010S-P sur infra Bouygues Offre Must
 
-Et voici les étapes pour faire fonctionner le G-010S-P chez Bouygues (Offre Must).
+## Matériels nécessaires :  
+Un convertisseur Fibre vers RJ45 (MC220L de Tp-Link)
+Un ONU G-010S-P  
+
+## Récupération des informations :  
 
 La majorité des informations nécessaires sont disponibles sur les étiquettes de l’ONT externe. 
 - le Hardware version (HW)
 - le numero de série (SN)
 - l'IMIE
 
-Par contre, il manque le Software Version. Pour cela, il faut se connecter à l'interface web de l'ONT, cependant Bouygues l'a bloquée. Voici la procédure pour tout de même se connecter : 
+Cependant, il manque le Software Version. Pour cela, il faut se connecter à l'interface web de l'ONT, cependant Bouygues l'a bloquée. Voici la procédure pour tout de même se connecter : 
 - retirer fibre et cable RJ45 de l'ONT
 - débrancher le cable d'alim 
 - appuyer sur le bouton reset puis rebrancher l'alim et maintenir appuyé le bouton reset jusqu'à ce que la led LOS clignote rouge.
@@ -21,15 +25,19 @@ Par contre, il manque le Software Version. Pour cela, il faut se connecter à l'
 
 ![Image](../main/HG8010Hv3_Bouygues.png?raw=true)
 
-## Informations pour se connecter en ssh au firmware d'origine :
-IP: 192.168.1.10  
-login: ONTUSER  
-password: SUGAR2A041  
+## Passage du G-010S-P en Carlitoxx V1
+### Informations pour se connecter en ssh au firmware d'origine :
+> Adresse IP: 192.168.1.10  
+> Login: ONTUSER  
+> Password: SUGAR2A041  
 
+Dans un premier temps, il faut utiliser l'ONU avec le MC220L, brancher le MC220L directement sur un PC en fixant une ip static de type 192.168.1.X (différente de 192.168.1.10).
 
-## Backup l'ONU G-010S-P avant flash : 
-Connection en ssh  
+### Backup l'ONU G-010S-P avant flash : 
+Se connecter en ssh à l'ONU  
+```
 ssh ONTUSER@192.168.1.10
+```
 
 Backup avec la commande dd 
 ```
@@ -51,7 +59,7 @@ scp -o KexAlgorithms=diffie-hellman-group1-sha1 ONTUSER@192.168.1.10:/tmp/mtd4.b
 scp -o KexAlgorithms=diffie-hellman-group1-sha1 ONTUSER@192.168.1.10:/tmp/mtd5.bin mtd5.bin
 ```
 
-## Bakcup des variables : 
+Bakcup des variables : 
 ```
 fw_printenv > /tmp/fw_printenv.backup
 uci show > /tmp/uci_show.backup
@@ -61,9 +69,9 @@ scp -o KexAlgorithms=diffie-hellman-group1-sha1 ONTUSER@192.168.1.10:/tmp/uci_sh
 ```
 
 
-## Flash du G-010S-P : 
+### Flash du G-010S-P : 
 
-Recupérez les images de la carlitoxx v1 : Carlitoxx v1
+Recupérez les images de la carlitoxx v1 : [Carlitoxx v1](https://github.com/njd90/G-010S-P_Bouygues/raw/main/CarlitoxV1.zip)
 
 Transférer les images sur l'ONU 
 ```
@@ -72,7 +80,9 @@ scp -o KexAlgorithms=diffie-hellman-group1-sha1 mtd5.bin ONTUSER@192.168.1.10:/t
 ```
 
 Se connecter à l'ONU en SSH
+```
 ssh ONTUSER@192.168.1.10
+```
 
 Charger les nouvelles images : 
 ```
@@ -99,15 +109,18 @@ reboot
 
 Une fois l'ONU redémarré via un test ping -t -w 30 192.168.1.10
 
-Aller sur l'interface web de celui-ci http://192.168.1.10
+Aller sur l'interface web de celui-ci http://192.168.1.10  
+Le login est : root  
+Pas de mot de passe  
 
-Lors de votre première connexion, il vous sera demandé d'entrer un compte / password. Ces identifiants seront ceux utilisé en SSH et en HTTP par la suite.
+Lors de votre première connexion, il vous sera demandé de renseigner un password. Ce mot de passe sera utilisé en SSH et en HTTP par la suite.  
 
 L'utilisateur par defaut en SSH est : root.
 
 SSH sur l'ONU
-
+```
 ssh root@192.168.1.10
+```
 
 Editer le fichier 
 ```
@@ -138,21 +151,30 @@ Optionnel : fw_setenv image1_version V3XXXXXXXXXXX (Software version)
 
 ### Test de l'ONU dans le MC220L
 
-Il est maintenant temps de vérifier que la configuration de l'ONU permet de se connecté à l'OLT, d'obtenir les VLAN et de pouvoir obtenir un traffic montant et descendant.
+Il est maintenant temps de connecter la fibre et de vérifier que la configuration de l'ONU permet de se connecter à l'OLT, d'obtenir les VLAN et de pouvoir obtenir un trafic montant et descendant.  
 
-SSH sur l'ONU
-
+Se connecter en SSH sur l'ONU
+```
 ssh root@192.168.1.10
-onu ploamsg
-curr_state doit être a 5
+```
 
-onu gtcsng
-Votre ont_serial doit apparaitre ici
+On vérifie l'inscription sur l’arbre GPON :
+```watch -n 1 onu ploamsg```
 
-gtop puis c et v
-ou
-gtop puis c et y
+Vous devez constater le passage O5
+> errorcode=0 curr_state=5 previous_state=4 elapsed_msec=30428
 
-Vous devriez visualiser le VLAN typique de Bouygues (100)
+curr_state doit être à 5
+
+Pour vérifier que le vlan 100 est bien transmis, il suffit d'exécuter la commande :
+```gtop ```
+
+puis c et v 
+
+Vous devez obtenir :
+![Image](../main/gtop_vlan.png?raw=true)
+
 Si vous êtes arrivé jusqu'ici, normalement votre ONU est correctement configuré.
+
+Il ne vous reste plus qu'à configurer votre routeur pour obtenir une adresse IP.
 
