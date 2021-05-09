@@ -174,7 +174,7 @@ Pour vérifier que le vlan 100 est bien transmis, il suffit d'exécuter la comma
 
 puis c et v 
 
-Vous devez obtenir :
+Vous devez obtenir :  
 ![Image](../main/gtop_vlan.png?raw=true)
 
 Si vous êtes arrivé jusqu'ici, normalement votre ONU est correctement configuré.
