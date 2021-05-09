@@ -178,3 +178,14 @@ Si vous êtes arrivé jusqu'ici, normalement votre ONU est correctement configur
 
 Il ne vous reste plus qu'à configurer votre routeur pour obtenir une adresse IP.
 
+## Liens utiles : 
+https://lafibre.info/remplacer-bbox/remplacer-lont-externe-de-loffre-must-par-un-onu-sfp/msg867098/#msg867098
+
+https://github.com/Berzerker/google-fiber-2gbps-bypass
+
+https://www.dslreports.com/forum/r32230041-Internet-Bypassing-the-HH3K-up-to-2-5Gbps-using-a-BCM57810S-NIC
+
+https://forum.openwrt.org/t/support-ma5671a-sfp-gpon/48042/33
+
+https://lafibre.info/remplacer-livebox/guide-de-connexion-fibre-directement-sur-un-routeur-voire-meme-en-2gbps/msg832904/#msg832904
+
