@@ -149,6 +149,7 @@ uci set sys.mib.equipment_id=HWTCXXXXXXXX (SN)
 Ensuite, il faut renseigner certaines variables :  
 fw_envset ont_serial HWTCXXXXXXXX (SN)  
 fw_setenv image0_version V3XXXXXXXXXXX (Software version)  
+uci set gpon.ploam.nPassword="0x00 0x00 0x0A 0xBB 0xCC 0xDD 0xEE 0xFF 0xGG 0xHH" # le ABBCCDDEEFFGGHH, c'est votre IMEI
 Optionnel : fw_setenv image1_version V3XXXXXXXXXXX (Software version)  
 
 
