@@ -147,12 +147,12 @@ uci set sys.mib.equipment_id=HWTCXXXXXXXX (SN)
 
 
 Ensuite, il faut renseigner certaines variables :  
+```
 fw_envset ont_serial HWTCXXXXXXXX (SN)  
 fw_setenv image0_version V3XXXXXXXXXXX (Software version)
-
 uci set gpon.ploam.nPassword="0x00 0x00 0x0A 0xBB 0xCC 0xDD 0xEE 0xFF 0xGG 0xHH" # le ABBCCDDEEFFGGHH, c'est votre IMEI
-
 uci commit
+```
 
 Optionnel : fw_setenv image1_version V3XXXXXXXXXXX (Software version)  
 
@@ -196,3 +196,5 @@ https://www.dslreports.com/forum/r32230041-Internet-Bypassing-the-HH3K-up-to-2-5
 https://forum.openwrt.org/t/support-ma5671a-sfp-gpon/48042/33
 
 https://lafibre.info/remplacer-livebox/guide-de-connexion-fibre-directement-sur-un-routeur-voire-meme-en-2gbps/msg832904/#msg832904
+
+https://gpon-sfp.felix.systems/gen_huawei.php
